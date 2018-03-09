@@ -11,25 +11,6 @@ const difference = {};
 
 server.use(bodyParser.json());
 server.get("/compare", (req, res, next) => {
-  function decimalPlaces(float,length) {
-  ret = "";
-  str = float.toString();
-  array = str.split(".");
-  if(array.length==2) {
-     ret += array[0] + ".";
-     for(i=0;i<length;i++) {
-        if(i>=array[1].length) ret += '0';
-        else ret+= array[1][i];
-     }
-  }
-  else if(array.length == 1) {
-    ret += array[0] + ".";
-    for(i=0;i<length;i++) {
-       ret += '0'
-    }
-  }
-  return ret;
-}
   fetch(`${currentURL}`)
     .then(res => res.json())
     .then(json => difference.todays_val = json.bpi.USD.rate_float)
