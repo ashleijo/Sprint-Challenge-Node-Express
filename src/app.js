@@ -18,10 +18,21 @@ server.get("/compare", (req, res, next) => {
 });
 
 server.use((req, res, next) => {
+  function a(vals) {
+    if (vals.todays_val < vals.yesterdays_val) {
+      return "Value has fallen by " + (vals.yesterdays_val-vals.todays_val) + "!";
+    } else if (vals.todays_val > vals.yesterdays_val) {
+    return "Value has risen " + (vals.todays_val-vals.yesterdays_val) + "!";
+    }
+  }
+
   fetch(`${historicalURL}?for=yesterday`)
   .then(res => res.json())
-  .then(json => difference.yesterday_val =  Object.values(json.bpi)[0])
-  .then(json => res.send(difference))
+  .then(json => difference.yesterdays_val = Object.values(json.bpi)[0])
+  .then(json => res.send(a(difference)) && console.log(a(difference)))
+
+
+
 });
 
 server.listen(config.port, (err) => {
